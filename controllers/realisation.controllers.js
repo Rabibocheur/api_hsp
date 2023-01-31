@@ -113,6 +113,7 @@ exports.DeleteRealisation = async (req, res) => {
     await realisation.destroy();
     return res.status(200).json({ message: "Realisation supprimé" });
   } catch (e) {
+    console.log(e)
     return res.status(500).json({ e });
   }
 };
