@@ -17,11 +17,17 @@ app.use((req, res, next) => {
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-const userRoutes = require("./routes/user.routes");
+const adminRoutes = require("./routes/admin.routes");
+const realisationRoutes = require("./routes/realisation.routes");
+const presentationRoutes = require("./routes/presentation.routes");
+const avisRoutes = require("./routes/avis.routes");
 
-app.use("/api/images", express.static(path.join(__dirname, "images")));
+app.use("/images", express.static(path.join(__dirname, "images")));
 
-app.use("/api/users", userRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api/realisation", realisationRoutes);
+app.use("/api/presentation", presentationRoutes);
+app.use("/api/avis", avisRoutes);
 
 const normalizePort = (val) => {
   const port = parseInt(val, 10);
