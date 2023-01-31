@@ -157,7 +157,7 @@ exports.sendEmail = async (req, res) => {
 
     let info = await transporter.sendMail({
       from: `${req.body.email}`, // sender address
-      to: "guillbpy@gmail.com", // list of receivers
+      to: "sthorvat@laposte.net", // list of receivers
       subject: `SITE HSP : ${req.body.subject}`, // Subject line
       html: `<html lang="fr">
       <head>
