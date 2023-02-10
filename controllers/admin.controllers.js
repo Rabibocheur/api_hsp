@@ -141,33 +141,33 @@ exports.updatePassword = (req, res) => {
 exports.sendEmail = async (req, res) => {
   try {
     let transporter = nodemailer.createTransport({
-      host: "smtp-mail.outlook.com", // hostname
+      host: "ssl0.ovh.net", // hostname
       secureConnection: false, // TLS requires secureConnection to be false
-      port: 587, // port for secure SMTP
+      port: 465, // port for secure SMTP
       tls: {
         ciphers: "SSLv3",
       },
       auth: {
-        user: "beaupuyg@outlook.fr",
-        pass: "TaurusCode159.951.1",
+        user: "contact@hsp-paysagiste.fr",
+        pass: "",
       },
     });
 
     console.log(req.body);
 
     let info = await transporter.sendMail({
-      from: `${req.body.email}`, // sender address
-      to: "sthorvat@laposte.net", // list of receivers
-      subject: `SITE HSP : ${req.body.subject}`, // Subject line
+      from: `contact@hsp-paysagiste.fr`, // sender address
+      to: "beaupuyg@outlook.fr", // list of receivers
+      subject: `CONTACT HSP : ${req.body.subject}`, // Subject line
       html: `<html lang="fr">
       <head>
       </head>
       <body>
+      <p>Un message depuis le formulaire de contact vous a été transmis :</p>
         <ul>
-            <li>Prénom: ${req.body.firstname} </li>
-            <li>Nom: ${req.body.lastname}</li>
-            <li>Telephone: ${req.body.phone}</li>
-            <li>Email: ${req.body.email}</li>
+            <li>Nom  :  ${req.body.firstname} ${req.body.lastname}</li>
+            <li>Tel  :  ${req.body.phone}</li>
+            <li>Mail :  ${req.body.email}</li>
         </ul>
           <br><br>
         <div style="padding: 30px">${req.body.message}</div>
@@ -175,9 +175,23 @@ exports.sendEmail = async (req, res) => {
       </html>`,
     });
 
+    await transporter.sendMail({
+      from: `contact@hsp-paysagiste.fr`, // sender address
+      to: `${req.body.email}`, // list of receivers
+      subject: `Message envoyé`, // Subject line
+      html: `<html lang="fr">
+      <head>
+      </head>
+      <body>
+        <div style="padding: 30px">Merci votre message, il a bien été envoyé nous vous répondrons dans les plus bref délai.</div>
+        <p>Cordialement, HSP</p>
+      </body>
+      </html>`,
+    });
+
     console.log(info);
 
-    return res.status(200).json({ message: "Votre mail a été envoyé, merci !" });
+    return res.status(200).json({ message: "Votre message a été envoyé, merci !" });
   } catch (e) {
     return res.status(301).json({ message: "Email ou champs invalide" });
   }
